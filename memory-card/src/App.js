@@ -20,10 +20,17 @@ import psyche from  './images/psyche.png';
 const App = () => {
   const [count, setCount] = useState(0);
   const [imageSourceArray, setArray] = useState([aphrodite, ares, artemis, daphne, echo, eris, eros, hades, hecates, hephaestus, hera, hermes, persephone, poseidon, psyche]);
-  const [clickedArray, setClicked] = useState([ , ]);
+  const [clickedArray, setClicked] = useState([]);
+  const [highScore, setHighScore] = useState(0);
 
     const incrementCount = () => {
-    setCount(count + 1);
+       
+      if ((clickedArray.filter((item, index) => clickedArray.indexOf(item) != index).length) >= 1) {
+        setHighScore(count);      
+        setCount(0);}
+        else {
+          setCount(count +1);
+        }
     };
 
     const getClicked = (e) => {
@@ -31,28 +38,35 @@ const App = () => {
     }
     const getRandom = (e) => {
         let currentIndex = imageSourceArray.length, randomIndex;
-        console.log(clickedArray)
         while (currentIndex !== 0) {
             randomIndex= Math.floor(Math.random()*currentIndex);
             currentIndex--; 
             [imageSourceArray[currentIndex], imageSourceArray[randomIndex]] = [imageSourceArray[randomIndex], imageSourceArray[currentIndex]]             
         };
-        console.log(e.target.src)
         setArray(imageSourceArray); 
-        return (incrementCount(), getClicked(e))  
+        return (getClicked(e), incrementCount())  
     };
 
-
+    const getHighScore = (e) => {
+      setHighScore(e)
+    }
 
   return (
     <div>
-      <div>
+      <div id='header'>
         <h1>Memory Game!</h1>
         <h2>Click An Image To Increase Your Score, But Be Sure Not To Click The Same Image Twice!</h2>
       </div>
-      <div>
-        <div>{count}</div>
+      <div id='countersContainer'>
+        <div>
+          <div>Current Score</div>
+          <div>{count}</div>
         </div>  
+        <div>
+          <div>High Score</div>
+          <div>{highScore}</div>
+        </div>
+      </div>  
         <div>
           <ImageLoader imageSourceArray={imageSourceArray} getRandom={getRandom}/>
         </div>
