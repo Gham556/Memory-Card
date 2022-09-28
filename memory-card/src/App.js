@@ -19,26 +19,31 @@ import psyche from  './images/psyche.png';
 
 const App = () => {
   const [count, setCount] = useState(0);
+  const [imageSourceArray, setArray] = useState([aphrodite, ares, artemis, daphne, echo, eris, eros, hades, hecates, hephaestus, hera, hermes, persephone, poseidon, psyche]);
+  const [clickedArray, setClicked] = useState([ , ]);
 
-  const incrementCount = () => {
+    const incrementCount = () => {
     setCount(count + 1);
-  };
+    };
 
-    const [imageSourceArray, setArray] = useState([aphrodite, ares, artemis, daphne, echo, eris, eros, hades, hecates, hephaestus, hera, hermes, persephone, poseidon, psyche]);
-
-    const getRandom = () => {
+    const getClicked = (e) => {
+      setClicked(clickedArray.concat([e.target.src]))
+    }
+    const getRandom = (e) => {
         let currentIndex = imageSourceArray.length, randomIndex;
-      
-        console.log('runs')
+        console.log(clickedArray)
         while (currentIndex !== 0) {
             randomIndex= Math.floor(Math.random()*currentIndex);
             currentIndex--; 
             [imageSourceArray[currentIndex], imageSourceArray[randomIndex]] = [imageSourceArray[randomIndex], imageSourceArray[currentIndex]]             
         };
-        setArray(imageSourceArray);      
-        return incrementCount()  
+        console.log(e.target.src)
+        setArray(imageSourceArray); 
+        return (incrementCount(), getClicked(e))  
     };
-    console.log('app runs')
+
+
+
   return (
     <div>
       <div>
