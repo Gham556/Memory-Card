@@ -26,7 +26,7 @@ const App = () => {
     const incrementCount = () => {
        
       if ((clickedArray.filter((item, index) => clickedArray.indexOf(item) != index).length) >= 1) {
-        setHighScore(count);      
+        getHighScore(count);      
         setCount(0);}
         else {
           setCount(count +1);
@@ -48,7 +48,11 @@ const App = () => {
     };
 
     const getHighScore = (e) => {
-      setHighScore(e)
+      if (e > highScore) {
+        setHighScore(e);
+      }
+
+      setClicked([]);
     }
 
   return (
